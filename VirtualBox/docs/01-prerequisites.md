@@ -9,7 +9,7 @@ This should also work with Linux (as the host operating system, not running in a
 
 ### Hardware Requirements
 
-This lab provisions 5 VMs on your workstation. That's a lot of compute resource!
+This lab provisions 6 VMs on your workstation. That's a lot of compute resource!
 
 - 16GB RAM. It may work with less, but will be slow and may crash unexpectedly.
 - 8 core or better CPU e.g. Intel Core-i7/Core-i9, AMD Ryzen-7/Ryzen-9. May work with fewer, but will be slow and may crash unexpectedly.

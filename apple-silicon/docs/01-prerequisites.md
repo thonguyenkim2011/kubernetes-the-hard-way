@@ -2,7 +2,7 @@
 
 ## Hardware Requirements
 
-This lab provisions 5 VMs on your workstation. That's a lot of compute resource!
+This lab provisions 6 VMs on your workstation. That's a lot of compute resource!
 
 * Apple Silicon System (M1/M2/M3 etc)
 * 8GB RAM (16GB recommended).<br/>Bear in mind that the unified memory architecture of Apple Silicon Macs means that the whole of the quoted memory is not available for software - some of it is used for the display, more if you have external displays. With less than 16GB, significantly smaller VMs will be deployed, which will not be sufficient to run the final step E2E tests.
@@ -24,7 +24,7 @@ Clone this repo down to your Mac. Open your Mac's terminal application. All comm
     ```bash
     mkdir ~/kodekloud
     cd ~/kodekloud
-    git clone https://github.com/mmumshad/kubernetes-the-hard-way.git
+    git clone https://github.com/thonguyenkim2011/kubernetes-the-hard-way.git
     cd kubernetes-the-hard-way/apple-silicon
     ```
 

@@ -5,7 +5,7 @@ Note: You must have VirtualBox and Vagrant configured at this point.
 Download this github repository and cd into the vagrant folder:
 
 ```bash
-git clone https://github.com/mmumshad/kubernetes-the-hard-way.git
+git clone https://github.com/thonguyenkim2011/kubernetes-the-hard-way.git
 ```
 
 CD into vagrant directory:

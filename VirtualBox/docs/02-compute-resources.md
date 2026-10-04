@@ -27,7 +27,7 @@ vagrant up
 
 This does the below:
 
-- Deploys 5 VMs - 2 controlplane, 2 worker and 1 loadbalancer with the name 'kubernetes-ha-* '
+- Deploys 6 VMs - 3 controlplane, 2 worker and 1 loadbalancer with the name 'kubernetes-ha-* '
     > This is the default settings. This can be changed at the top of the Vagrant file.
     > If you choose to change these settings, please also update `vagrant/ubuntu/vagrant/setup-hosts.sh`
     > to add the additional hosts to the `/etc/hosts` default before running `vagrant up`.
@@ -38,6 +38,7 @@ This does the below:
     | ------------  | ---------------------- |:-------------:| -------------:| ----------------:|-----:|
     | controlplane01      | kubernetes-ha-controlplane01 | Master        | 192.168.56.11 |     2711         | 2048 |
     | controlplane02      | kubernetes-ha-controlplane02 | Master        | 192.168.56.12 |     2712         | 1024 |
+    | controlplane03      | kubernetes-ha-controlplane03 | Master        | 192.168.56.13 |     2713         | 1024 |
     | node01      | kubernetes-ha-node01 | Worker        | 192.168.56.21 |     2721         | 512  |
     | node02      | kubernetes-ha-node02 | Worker        | 192.168.56.22 |     2722         | 1024 |
     | loadbalancer  | kubernetes-ha-lb       | LoadBalancer  | 192.168.56.30 |     2730         | 1024 |

@@ -108,7 +108,7 @@ All the following commands from here until the [verification](#verification) ste
 
 
 ```bash
-KUBE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+KUBE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable-1.37.txt)
 
 wget -q --show-progress --https-only --timestamping \
   https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/${ARCH}/kube-proxy \
@@ -307,7 +307,7 @@ Output will be similar to
 
 ```
 NAME       STATUS     ROLES    AGE   VERSION
-node01     NotReady   <none>   93s   v1.28.4
+node01     NotReady   <none>   93s   v1.37.1
 ```
 
 The node is not ready as we have not yet installed pod networking. This comes later.

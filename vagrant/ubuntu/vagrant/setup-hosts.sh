@@ -25,6 +25,7 @@ sed -e "/^.*$2.*/d" -i /etc/hosts
 cat >> /etc/hosts <<EOF
 ${NETWORK}.11  controlplane01
 ${NETWORK}.12  controlplane02
+${NETWORK}.13  controlplane03
 ${NETWORK}.21  node01
 ${NETWORK}.22  node02
 ${NETWORK}.30  loadbalancer

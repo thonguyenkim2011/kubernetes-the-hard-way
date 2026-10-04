@@ -11,6 +11,7 @@ NC='\033[0m'
 PRIMARY_IP=$(ip addr show enp0s8 | grep "inet " | awk '{print $2}' | cut -d / -f 1)
 CONTROL01=$(dig +short controlplane01)
 CONTROL02=$(dig +short controlplane02)
+CONTROL03=$(dig +short controlplane03)
 NODE01=$(dig +short node01)
 NODE02=$(dig +short node02)
 LOADBALANCER=$(dig +short loadbalancer)
@@ -469,9 +470,9 @@ SUBJ_APIKC="Subject:CN=kube-apiserver-kubelet-client,O=system:masters"
 case $choice in
 
   1)
-    if ! [ "${HOST}" = "controlplane01" -o "${HOST}" = "controlplane02" ]
+    if ! [ "${HOST}" = "controlplane01" -o "${HOST}" = "controlplane02" -o "${HOST}" = "controlplane03" ]
     then
-        printf "${FAILED}Must run on controlplane01 or controlplane02${NC}\n"
+        printf "${FAILED}Must run on controlplane01, controlplane02 or controlplane03${NC}\n"
         exit 1
     fi
 
@@ -494,9 +495,9 @@ case $choice in
     ;;
 
   2)
-    if ! [ "${HOST}" = "controlplane01" -o "${HOST}" = "controlplane02" ]
+    if ! [ "${HOST}" = "controlplane01" -o "${HOST}" = "controlplane02" -o "${HOST}" = "controlplane03" ]
     then
-        printf "${FAILED}Must run on controlplane01 or controlplane02${NC}\n"
+        printf "${FAILED}Must run on controlplane01, controlplane02 or controlplane03${NC}\n"
         exit 1
     fi
 
@@ -511,9 +512,9 @@ case $choice in
     ;;
 
   3)
-    if ! [ "${HOST}" = "controlplane01" -o "${HOST}" = "controlplane02" ]
+    if ! [ "${HOST}" = "controlplane01" -o "${HOST}" = "controlplane02" -o "${HOST}" = "controlplane03" ]
     then
-        printf "${FAILED}Must run on controlplane01 or controlplane02${NC}\n"
+        printf "${FAILED}Must run on controlplane01, controlplane02 or controlplane03${NC}\n"
         exit 1
     fi
 

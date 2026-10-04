@@ -41,7 +41,7 @@ Here we set up a couple of environment variables to supply arguments to the test
 Then we invoke the test package
 
 ```bash
-KUBE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+KUBE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable-1.37.txt)
 NUM_CPU=$(cat /proc/cpuinfo | grep '^processor' | wc -l)
 
 cd ~

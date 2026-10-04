@@ -22,9 +22,9 @@ Download the official etcd release binaries from the [etcd](https://github.com/e
 
 
 ```bash
-ETCD_VERSION="v3.5.9"
+ETCD_VERSION="v3.7.2"
 wget -q --show-progress --https-only --timestamping \
-  "https://github.com/coreos/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${ARCH}.tar.gz"
+  "https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${ARCH}.tar.gz"
 ```
 
 Extract and install the `etcd` server and the `etcdctl` command line utility:

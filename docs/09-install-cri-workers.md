@@ -51,7 +51,7 @@ You can perform this step with [tmux](01-prerequisites.md#running-commands-in-pa
 1.  Determine latest version of Kubernetes and store in a shell variable
 
     ```bash
-    KUBE_LATEST=$(curl -L -s https://dl.k8s.io/release/stable.txt | awk 'BEGIN { FS="." } { printf "%s.%s", $1, $2 }')
+    KUBE_LATEST=$(curl -L -s https://dl.k8s.io/release/stable-1.37.txt | awk 'BEGIN { FS="." } { printf "%s.%s", $1, $2 }')
     ```
 
 1. Download the Kubernetes public signing key

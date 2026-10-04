@@ -50,8 +50,8 @@ Output will be similar to
 
 ```
 NAME       STATUS   ROLES    AGE     VERSION
-node01     Ready    <none>   4m11s   v1.28.4
-node02     Ready    <none>   2m49s   v1.28.4
+node01     Ready    <none>   4m11s   v1.37.1
+node02     Ready    <none>   2m49s   v1.37.1
 ```
 
 Reference: https://kubernetes.io/docs/tasks/administer-cluster/network-policy-provider/weave-network-policy/#install-the-weave-net-addon

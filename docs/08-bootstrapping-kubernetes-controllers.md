@@ -22,7 +22,7 @@ You can perform this step with [tmux](01-prerequisites.md#running-commands-in-pa
 Download the latest official Kubernetes release binaries:
 
 ```bash
-KUBE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+KUBE_VERSION=$(curl -L -s https://dl.k8s.io/release/stable-1.37.txt)
 
 wget -q --show-progress --https-only --timestamping \
   "https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/${ARCH}/kube-apiserver" \
@@ -95,7 +95,6 @@ Documentation=https://github.com/kubernetes/kubernetes
 ExecStart=/usr/local/bin/kube-apiserver \\
   --advertise-address=${PRIMARY_IP} \\
   --allow-privileged=true \\
-  --apiserver-count=3 \\
   --audit-log-maxage=30 \\
   --audit-log-maxbackup=3 \\
   --audit-log-maxsize=100 \\
@@ -251,12 +250,10 @@ It will give you a deprecation warning here, but that's ok.
 
 ```
 Warning: v1 ComponentStatus is deprecated in v1.19+
-NAME                 STATUS    MESSAGE              ERROR
-controller-manager   Healthy   ok
+NAME                 STATUS    MESSAGE   ERROR
 scheduler            Healthy   ok
-etcd-0               Healthy   {"health": "true"}
-etcd-1               Healthy   {"health": "true"}
-etcd-2               Healthy   {"health": "true"}
+controller-manager   Healthy   ok
+etcd-0               Healthy   ok
 ```
 
 > Remember to run the above commands on each controller node: `controlplane01`, `controlplane02` and `controlplane03`.

@@ -32,11 +32,11 @@ The target audience for this tutorial is someone planning to support a productio
 
 Kubernetes The Hard Way guides you through bootstrapping a highly available Kubernetes cluster with end-to-end encryption between components and RBAC authentication.
 
-* [Kubernetes](https://github.com/kubernetes/kubernetes) Latest version
-* [Container Runtime](https://github.com/containerd/containerd) Latest version
+* [Kubernetes](https://github.com/kubernetes/kubernetes) v1.37 (latest patch release)
+* [Container Runtime](https://github.com/containerd/containerd) from the Ubuntu 22.04 repository
 * [Weave Networking](https://www.weave.works/docs/net/latest/kubernetes/kube-addon/)
-* [etcd](https://github.com/coreos/etcd) v3.5.9
-* [CoreDNS](https://github.com/coredns/coredns) v1.9.4
+* [etcd](https://github.com/etcd-io/etcd) v3.7.2
+* [CoreDNS](https://github.com/coredns/coredns) v1.14.6
 
 ### Node configuration
 

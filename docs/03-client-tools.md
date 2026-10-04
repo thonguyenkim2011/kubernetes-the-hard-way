@@ -78,10 +78,12 @@ We will be using `kubectl` early on to generate `kubeconfig` files for the contr
 
 The environment variable `ARCH` is pre-set during VM deployment according to whether using VirtualBox (`amd64`) or Apple Silicon (`arm64`) to ensure the correct version of this and later software is downloaded for your machine architecture.
 
+All Kubernetes components in this lab are pinned to the latest patch release of Kubernetes v1.37 (read from `https://dl.k8s.io/release/stable-1.37.txt`). This keeps every node on the same version and avoids picking up a newer minor release that the lab has not been checked against.
+
 ### Linux
 
 ```bash
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${ARCH}/kubectl"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable-1.37.txt)/bin/linux/${ARCH}/kubectl"
 chmod +x kubectl
 sudo mv kubectl /usr/local/bin/
 ```
@@ -97,7 +99,7 @@ kubectl version --client
 output will be similar to this, although versions may be newer:
 
 ```
-Client Version: v1.29.0
+Client Version: v1.37.1
 Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
 ```
 

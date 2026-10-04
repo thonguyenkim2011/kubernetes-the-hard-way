@@ -71,8 +71,8 @@ kubectl get nodes
 
 ```
 NAME       STATUS      ROLES    AGE    VERSION
-node01     NotReady    <none>   118s   v1.28.4
-node02     NotReady    <none>   118s   v1.28.4
+node01     NotReady    <none>   118s   v1.37.1
+node02     NotReady    <none>   118s   v1.37.1
 ```
 
 Next: [Deploy Pod Networking](./13-configure-pod-networking.md)</br>

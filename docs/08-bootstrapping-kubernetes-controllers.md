@@ -1,21 +1,21 @@
 # Bootstrapping the Kubernetes Control Plane
 
-In this lab you will bootstrap the Kubernetes control plane across 2 compute instances and configure it for high availability. You will also create an external load balancer that exposes the Kubernetes API Servers to remote clients. The following components will be installed on each node: Kubernetes API Server, Scheduler, and Controller Manager.
+In this lab you will bootstrap the Kubernetes control plane across 3 compute instances and configure it for high availability. You will also create an external load balancer that exposes the Kubernetes API Servers to remote clients. The following components will be installed on each node: Kubernetes API Server, Scheduler, and Controller Manager.
 
-Note that in a production-ready cluster it is recommended to have an odd number of controlplane nodes as for multi-node services like etcd, leader election and quorum work better. See lecture on this ([KodeKloud](https://kodekloud.com/topic/etcd-in-ha/), [Udemy](https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/learn/lecture/14296192#overview)). We're only using two here to save on RAM on your workstation.
+We use three controlplane nodes because multi-node services like etcd need a majority (quorum) of members to be available. With three nodes the cluster tolerates the loss of one node; with two nodes, losing either one stops etcd. See lecture on this ([KodeKloud](https://kodekloud.com/topic/etcd-in-ha/), [Udemy](https://www.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/learn/lecture/14296192#overview)).
 
 
 If you examine the command line arguments passed to the various control plane components, you should recognise many of the files that were created in earlier sections of this course, such as certificates, keys, kubeconfigs, the encryption configuration etc.
 
 ## Prerequisites
 
-The commands in this lab up as far as the load balancer configuration must be run on each controller instance: `controlplane01`, and `controlplane02`. Login to each controller instance using SSH Terminal.
+The commands in this lab up as far as the load balancer configuration must be run on each controller instance: `controlplane01`, `controlplane02` and `controlplane03`. Login to each controller instance using SSH Terminal.
 
 You can perform this step with [tmux](01-prerequisites.md#running-commands-in-parallel-with-tmux).
 
 ## Provision the Kubernetes Control Plane
 
-[//]: # (host:controlplane01-controlplane02)
+[//]: # (host:controlplane01-controlplane02-controlplane03)
 
 ### Download and Install the Kubernetes Controller Binaries
 
@@ -68,11 +68,12 @@ Retrieve these internal IP addresses:
 LOADBALANCER=$(dig +short loadbalancer)
 ```
 
-IP addresses of the two controlplane nodes, where the etcd servers are.
+IP addresses of the three controlplane nodes, where the etcd servers are.
 
 ```bash
 CONTROL01=$(dig +short controlplane01)
 CONTROL02=$(dig +short controlplane02)
+CONTROL03=$(dig +short controlplane03)
 ```
 
 CIDR ranges used *within* the cluster
@@ -94,7 +95,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 ExecStart=/usr/local/bin/kube-apiserver \\
   --advertise-address=${PRIMARY_IP} \\
   --allow-privileged=true \\
-  --apiserver-count=2 \\
+  --apiserver-count=3 \\
   --audit-log-maxage=30 \\
   --audit-log-maxbackup=3 \\
   --audit-log-maxsize=100 \\
@@ -107,7 +108,7 @@ ExecStart=/usr/local/bin/kube-apiserver \\
   --etcd-cafile=/var/lib/kubernetes/pki/ca.crt \\
   --etcd-certfile=/var/lib/kubernetes/pki/etcd-server.crt \\
   --etcd-keyfile=/var/lib/kubernetes/pki/etcd-server.key \\
-  --etcd-servers=https://${CONTROL01}:2379,https://${CONTROL02}:2379 \\
+  --etcd-servers=https://${CONTROL01}:2379,https://${CONTROL02}:2379,https://${CONTROL03}:2379 \\
   --event-ttl=1h \\
   --encryption-provider-config=/var/lib/kubernetes/encryption-config.yaml \\
   --kubelet-certificate-authority=/var/lib/kubernetes/pki/ca.crt \\
@@ -212,7 +213,7 @@ sudo chmod 600 /var/lib/kubernetes/*.kubeconfig
 
 ## Optional - Check Certificates and kubeconfigs
 
-At `controlplane01` and `controlplane02` nodes, run the following, selecting option 3
+At `controlplane01`, `controlplane02` and `controlplane03` nodes, run the following, selecting option 3
 
 [//]: # (command:./cert_verify.sh 3)
 
@@ -238,7 +239,7 @@ At `controlplane01` and `controlplane02` nodes, run the following, selecting opt
 
 [//]: # (sleep:10)
 
-After running the above commands on both controlplane nodes, run the following on `controlplane01`
+After running the above commands on all three controlplane nodes, run the following on `controlplane01`
 
 ```bash
 kubectl get componentstatuses --kubeconfig admin.kubeconfig
@@ -255,9 +256,10 @@ controller-manager   Healthy   ok
 scheduler            Healthy   ok
 etcd-0               Healthy   {"health": "true"}
 etcd-1               Healthy   {"health": "true"}
+etcd-2               Healthy   {"health": "true"}
 ```
 
-> Remember to run the above commands on each controller node: `controlplane01`, and `controlplane02`.
+> Remember to run the above commands on each controller node: `controlplane01`, `controlplane02` and `controlplane03`.
 
 ## The Kubernetes Frontend Load Balancer
 
@@ -282,10 +284,11 @@ Read IP addresses of controlplane nodes and this host to shell variables
 ```bash
 CONTROL01=$(dig +short controlplane01)
 CONTROL02=$(dig +short controlplane02)
+CONTROL03=$(dig +short controlplane03)
 LOADBALANCER=$(dig +short loadbalancer)
 ```
 
-Create HAProxy configuration to listen on API server port on this host and distribute requests evently to the two controlplane nodes.
+Create HAProxy configuration to listen on API server port on this host and distribute requests evenly to the three controlplane nodes.
 
 We configure it to operate as a [layer 4](https://en.wikipedia.org/wiki/Transport_layer) loadbalancer (using `mode tcp`), which means it forwards any traffic directly to the backends without doing anything like [SSL offloading](https://ssl2buy.com/wiki/ssl-offloading).
 
@@ -303,6 +306,7 @@ backend kubernetes-controlplane-nodes
     option tcp-check
     server controlplane01 ${CONTROL01}:6443 check fall 3 rise 2
     server controlplane02 ${CONTROL02}:6443 check fall 3 rise 2
+    server controlplane03 ${CONTROL03}:6443 check fall 3 rise 2
 EOF
 ```
 

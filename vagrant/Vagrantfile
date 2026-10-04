@@ -61,7 +61,7 @@ def provision_kubernetes_node(node)
 end
 
 # Define the number of master and worker nodes. You should not change this
-NUM_CONTROL_NODES = 2
+NUM_CONTROL_NODES = 3
 NUM_WORKER_NODE = 2
 
 # Host address start points

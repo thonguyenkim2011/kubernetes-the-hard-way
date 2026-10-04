@@ -169,17 +169,18 @@ done
 Copy the appropriate `admin.kubeconfig`, `kube-controller-manager` and `kube-scheduler` kubeconfig files to each controller instance:
 
 ```bash
-for instance in controlplane01 controlplane02; do
+for instance in controlplane01 controlplane02 controlplane03; do
   scp admin.kubeconfig kube-controller-manager.kubeconfig kube-scheduler.kubeconfig ${instance}:~/
 done
 ```
 
 ## Optional - Check kubeconfigs
 
-At `controlplane01` and `controlplane02` nodes, run the following, selecting option 2
+At `controlplane01`, `controlplane02` and `controlplane03` nodes, run the following, selecting option 2
 
 [//]: # (command./cert_verify.sh 2)
 [//]: # (command:ssh controlplane02 './cert_verify.sh 2')
+[//]: # (command:ssh controlplane03 './cert_verify.sh 2')
 
 ```
 ./cert_verify.sh

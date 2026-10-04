@@ -14,7 +14,7 @@ Kubernetes The Hard Way is optimized for learning, which means taking the long r
 This tutorial is a modified version of the original developed by [Kelsey Hightower](https://github.com/kelseyhightower/kubernetes-the-hard-way).
 While the original one uses GCP as the platform to deploy kubernetes,  we use a hypervisor to deploy a cluster on a local machine. If you prefer the cloud version, refer to the original one [here](https://github.com/kelseyhightower/kubernetes-the-hard-way)
 
-The results of this tutorial should *not* be viewed as production ready, and may receive limited support from the community, but don't let that stop you from learning!<br/>Note that we are only building 2 controlplane nodes here instead of the recommended 3 that `etcd` requires to maintain quorum. This is to save on resources, and simply to show how to load balance across more than one controlplane node.
+The results of this tutorial should *not* be viewed as production ready, and may receive limited support from the community, but don't let that stop you from learning!<br/>Note that we are building 3 controlplane nodes, which is the minimum that `etcd` requires to maintain quorum and survive the loss of one node.
 
 ### <font color="red">Before shouting "Help! It's not working!"</font>
 
@@ -22,7 +22,7 @@ Please note that with this particular challenge, it is all about the minute deta
 
 Note also that in developing this lab, it has been tested *many many* times! Once you have the VMs up and you start to build the cluster, if at any point something isn't working it is 99.9999% likely to be because you missed something, not a bug in the lab!
 
-Always run the `cert_verify.sh` script at the places it suggests, and always ensure you are on the correct node when you do stuff. If `cert_verify.sh` shows anything in red, then you have made an error in a previous step. For the controlplane node checks, run the check on `controlplane01` and on `controlplane02`
+Always run the `cert_verify.sh` script at the places it suggests, and always ensure you are on the correct node when you do stuff. If `cert_verify.sh` shows anything in red, then you have made an error in a previous step. For the controlplane node checks, run the check on `controlplane01`, `controlplane02` and `controlplane03`
 
 ## Target Audience
 
@@ -42,9 +42,9 @@ Kubernetes The Hard Way guides you through bootstrapping a highly available Kube
 
 We will be building the following:
 
-* Two control plane nodes (`controlplane01` and `controlplane02`) running the control plane components as operating system services. This is not a kubeadm cluster as you are used to if you have been doing the CKA course. The control planes are *not* themselves nodes, therefore will not show with `kubectl get nodes`.
+* Three control plane nodes (`controlplane01`, `controlplane02` and `controlplane03`) running the control plane components as operating system services. This is not a kubeadm cluster as you are used to if you have been doing the CKA course. The control planes are *not* themselves nodes, therefore will not show with `kubectl get nodes`.
 * Two worker nodes (`node01` and `node02`)
-* One loadbalancer VM running [HAProxy](https://www.haproxy.org/) to balance requests between the two API servers and provide the endpoint for your KUBECONFIG.
+* One loadbalancer VM running [HAProxy](https://www.haproxy.org/) to balance requests between the three API servers and provide the endpoint for your KUBECONFIG.
 
 ## Getting Started
 

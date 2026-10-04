@@ -21,6 +21,7 @@ Set up environment variables. Run the following:
 ```bash
 CONTROL01=$(dig +short controlplane01)
 CONTROL02=$(dig +short controlplane02)
+CONTROL03=$(dig +short controlplane03)
 LOADBALANCER=$(dig +short loadbalancer)
 ```
 
@@ -36,16 +37,18 @@ Check that the environment variables are set. Run the following:
 ```bash
 echo $CONTROL01
 echo $CONTROL02
+echo $CONTROL03
 echo $LOADBALANCER
 echo $SERVICE_CIDR
 echo $API_SERVICE
 ```
 
-The output should look like this with one IP address per line. If you changed any of the defaults mentioned in the [prerequisites](./01-prerequisites.md) page, then addresses may differ. The first 3 addresses will also be different for Apple Silicon on Multipass (likely 192.168.64.x).
+The output should look like this with one IP address per line. If you changed any of the defaults mentioned in the [prerequisites](./01-prerequisites.md) page, then addresses may differ. The first 4 addresses will also be different for Apple Silicon on Multipass (likely 192.168.64.x).
 
 ```
 192.168.56.11
 192.168.56.12
+192.168.56.13
 192.168.56.30
 10.96.0.0/24
 10.96.0.1
@@ -217,8 +220,9 @@ DNS.5 = kubernetes.default.svc.cluster.local
 IP.1 = ${API_SERVICE}
 IP.2 = ${CONTROL01}
 IP.3 = ${CONTROL02}
-IP.4 = ${LOADBALANCER}
-IP.5 = 127.0.0.1
+IP.4 = ${CONTROL03}
+IP.5 = ${LOADBALANCER}
+IP.6 = 127.0.0.1
 EOF
 ```
 
@@ -301,7 +305,8 @@ subjectAltName = @alt_names
 [alt_names]
 IP.1 = ${CONTROL01}
 IP.2 = ${CONTROL02}
-IP.3 = 127.0.0.1
+IP.3 = ${CONTROL03}
+IP.4 = 127.0.0.1
 EOF
 ```
 
@@ -393,7 +398,7 @@ Copy the appropriate certificates and private keys to each instance:
 
 ```bash
 {
-for instance in controlplane01 controlplane02; do
+for instance in controlplane01 controlplane02 controlplane03; do
   scp -o StrictHostKeyChecking=no ca.crt ca.key kube-apiserver.key kube-apiserver.crt \
     apiserver-kubelet-client.crt apiserver-kubelet-client.key \
     service-account.key service-account.crt \
@@ -409,11 +414,12 @@ done
 }
 ```
 
-## Optional - Check Certificates on controlplane02
+## Optional - Check Certificates on controlplane02 and controlplane03
 
-At `controlplane02` node run the following, selecting option 1
+At `controlplane02` and `controlplane03` nodes run the following, selecting option 1
 
 [//]: # (commandssh controlplane02 './cert_verify.sh 1')
+[//]: # (commandssh controlplane03 './cert_verify.sh 1')
 
 ```
 ./cert_verify.sh

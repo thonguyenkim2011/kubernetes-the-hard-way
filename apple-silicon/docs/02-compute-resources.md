@@ -22,7 +22,7 @@ Because we cannot use VirtualBox and are instead using Multipass, [a script is p
     exit
     ```
 
-    Do this for the other controlplane, both nodes and loadbalancer.
+    Do this for the other controlplanes, both nodes and loadbalancer.
 
 # Deleting the Virtual Machines
 

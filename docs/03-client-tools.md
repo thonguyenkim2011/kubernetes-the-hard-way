@@ -34,6 +34,7 @@ The option `-o StrictHostKeyChecking=no` tells it not to ask if you want to conn
 
 ```bash
 ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@controlplane02
+ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@controlplane03
 ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@loadbalancer
 ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@node01
 ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@node02
@@ -54,6 +55,9 @@ ssh controlplane01
 exit
 
 ssh controlplane02
+exit
+
+ssh controlplane03
 exit
 
 ssh node01

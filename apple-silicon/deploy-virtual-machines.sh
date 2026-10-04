@@ -45,6 +45,7 @@ specs=/tmp/vm-specs
 cat <<EOF > $specs
 controlplane01,2,${CPMEM},10G
 controlplane02,2,${CPMEM},5G
+controlplane03,2,${CPMEM},5G
 loadbalancer,1,512M,5G
 node01,2,${WNMEM},5G
 node02,2,${WNMEM},5G

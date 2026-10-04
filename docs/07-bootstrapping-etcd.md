@@ -126,7 +126,7 @@ List the etcd cluster members.
 After running the above commands on all three controlplane nodes, run the following on any of `controlplane01`, `controlplane02` or `controlplane03`
 
 ```bash
-sudo ETCDCTL_API=3 etcdctl member list \
+sudo etcdctl member list \
   --endpoints=https://127.0.0.1:2379 \
   --cacert=/etc/etcd/ca.crt \
   --cert=/etc/etcd/etcd-server.crt \

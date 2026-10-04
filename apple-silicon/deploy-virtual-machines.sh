@@ -18,6 +18,9 @@ MEM_GB=$(( $(sysctl hw.memsize | cut -d ' ' -f 2) /  1073741824 ))
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/scripts
 TOOLS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/../tools
 
+# MTU for the VM network interface. Override with e.g. VM_MTU=1500 ./deploy-virtual-machines.sh
+VM_MTU=${VM_MTU:-1400}
+
 CPMEM="2048M"
 WNMEM="2048M"
 
@@ -105,7 +108,7 @@ do
     multipass transfer $hostentries $node:/tmp/
     multipass transfer $SCRIPT_DIR/01-setup-hosts.sh $node:/tmp/
     multipass transfer $SCRIPT_DIR/cert_verify.sh $node:/home/ubuntu/
-    multipass exec $node -- /tmp/01-setup-hosts.sh
+    multipass exec $node -- /tmp/01-setup-hosts.sh $VM_MTU
 done
 
 multipass transfer $TOOLS_DIR/approve-csr.sh controlplane01:/home/ubuntu/
